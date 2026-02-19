@@ -1,3 +1,5 @@
+/* Keep your existing wrapper, header, and card styles from your uploaded file here */
+
 .milestones-wrapper {
   max-width: 900px;
   margin: 0 auto;
@@ -13,18 +15,18 @@
   font-size: 3.5rem;
   letter-spacing: -2px;
   margin: 0 0 10px 0;
-  text-shadow: 4px 4px 0px var(--accent-blue);
+  text-shadow: 4px 4px 0px #93c5fd; /* Light blue accent */
 }
 
 .current-xp-badge {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: var(--bg-surface);
-  border: var(--border-thick);
+  background: #fff;
+  border: 3px solid #000;
   padding: 12px 24px;
   border-radius: 50px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
   font-weight: 900;
   font-size: 1.2rem;
   box-shadow: 4px 4px 0px #000;
@@ -41,17 +43,18 @@
 .milestone-card {
   display: flex;
   background: #fff;
-  border: var(--border-thick);
-  border-radius: var(--border-radius);
+  border: 3px solid #000;
+  border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* UNLOCKED VS LOCKED PHYSICS */
 .unlocked-card {
-  box-shadow: var(--shadow-hard);
+  box-shadow: 6px 6px 0px #000;
   border-color: #000;
 }
+
 .unlocked-card:hover {
   transform: translate(-4px, -4px);
   box-shadow: 10px 10px 0px #000;
@@ -64,13 +67,19 @@
   color: #666;
 }
 
+.is-redeemed {
+  opacity: 0.7;
+  transform: none !important;
+  box-shadow: 4px 4px 0px #000 !important;
+}
+
 /* THE ICON SQUARE ON THE LEFT */
 .milestone-status {
   width: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-right: var(--border-thick);
+  border-right: 3px solid #000;
   flex-shrink: 0;
 }
 .locked-card .milestone-status {
@@ -89,6 +98,7 @@
 .milestone-text h2 {
   font-size: 1.8rem;
   margin: 0 0 8px 0;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
 }
 .locked-card .milestone-text h2 {
   color: #555;
@@ -102,11 +112,11 @@
 
 /* PROGRESS BARS & ALERTS */
 .xp-missing-alert {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
   font-size: 0.95rem;
-  color: var(--text-muted);
+  color: #666;
   text-transform: uppercase;
-  margin-bottom: -10px; /* Pulls the bar closer to the text */
+  margin-bottom: -10px;
 }
 .xp-missing-alert strong {
   color: #000;
@@ -117,25 +127,175 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: var(--accent-yellow);
   color: #000;
-  border: 2px solid #000;
+  border: 3px solid #000;
   padding: 12px 20px;
   border-radius: 8px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
   font-weight: 900;
-  box-shadow: 3px 3px 0px #000;
+  box-shadow: 4px 4px 0px #000;
+  text-transform: uppercase;
+}
+
+/* Turn alert into an interactive button */
+.redeem-btn {
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.redeem-btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0px #000;
+}
+
+.redeemed-alert {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #e2e8f0;
+  color: #475569;
+  border: 3px solid #94a3b8;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: 900;
+}
+
+/* --- BRUTALIST MODAL STYLES --- */
+.brutalist-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.brutalist-modal {
+  background: #fff;
+  border: 4px solid #000;
+  width: 90%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 12px 12px 0px #000;
+  position: relative;
+  text-align: center;
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.9) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #fff;
+  border: 3px solid #000;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px #000;
+  transition: all 0.1s;
+}
+.close-modal-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px #000;
+}
+
+.modal-title {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 2rem;
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+}
+.modal-subtitle {
+  font-size: 1rem;
+  margin: 0 0 20px 0;
+}
+
+.modal-visual-box {
+  border: 4px solid #000;
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 25px;
+  box-shadow: inset 0px 0px 15px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.qr-wrapper {
+  background: #fff;
+  border: 4px solid #000;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+}
+.qr-code-img {
+  width: 150px;
+  height: 150px;
+  display: block;
+}
+.scan-text {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin: 0 0 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.points-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+.points-wrapper h2 {
+  font-size: 2.5rem;
+  margin: 0;
+  text-shadow: 2px 2px 0px #fff;
+}
+.points-wrapper p { font-weight: bold; margin: 0; }
+
+.confirm-redeem-btn {
+  width: 100%;
+  background: #000;
+  color: #fff;
+  border: 3px solid #000;
+  padding: 15px;
+  font-size: 1.2rem;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px #ccc;
+  transition: all 0.1s;
+}
+.confirm-redeem-btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0px #ccc;
 }
 
 /* Mobile responsive */
 @media (max-width: 600px) {
-  .milestone-card {
-    flex-direction: column;
-  }
+  .milestone-card { flex-direction: column; }
   .milestone-status {
     width: 100%;
     height: 80px;
     border-right: none;
-    border-bottom: var(--border-thick);
+    border-bottom: 3px solid #000;
   }
 }

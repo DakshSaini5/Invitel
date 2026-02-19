@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Shield, Mail, Calendar, MapPin, Award, Zap, 
-  LogOut, Settings, Star, FileText, TrendingUp, Share2, X, Download, Trophy 
+  LogOut, Settings, Star, FileText, TrendingUp, Share2, X, Download, Trophy, 
+  Archive, Ticket, ExternalLink, QrCode
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Profile.css';
@@ -44,7 +45,9 @@ const MilestoneCard = ({ isOpen, onClose, user, rank }) => {
 
               <div className="share-footer">
                 <div className="qr-sim">
-                  <div className="qr-box"></div>
+                  <div className="qr-box">
+                    <QrCode size={34} color="#000" />
+                  </div>
                   <span>SCAN TO JOIN</span>
                 </div>
                 <div className="share-url">invite.io/{user.referralCode}</div>
@@ -78,6 +81,22 @@ const Profile = () => {
     location: "Mumbai, IN",
     referralCode: "MARC-26"
   });
+
+  // Simulated Inventory from Redemptions (Normally fetched from DB)
+  const unlockedItems = [
+    { 
+      id: 101, title: "LinkedIn Impact Certificate", type: "certificate", 
+      date: "FEB 2026", color: "#60a5fa", icon: <Award size={24}/> 
+    },
+    { 
+      id: 102, title: "VIP Event Pass", type: "qr", 
+      date: "FEB 2026", color: "#93c5fd", icon: <Ticket size={24}/> 
+    },
+    { 
+      id: 103, title: "Starbucks Voucher", type: "qr", 
+      date: "JAN 2026", color: "#fde047", icon: <QrCode size={24}/> 
+    }
+  ];
 
   useEffect(() => {
     const savedProfile = localStorage.getItem('userProfile');
@@ -129,7 +148,6 @@ const Profile = () => {
           </div>
 
           <div className="profile-actions">
-            {/* REDESIGNED PREMIUM BUTTON */}
             <button className="share-trigger-btn" onClick={() => setShowShareCard(true)}>
               <Share2 size={20} />
               <span>GENERATE SHARE CARD</span>
@@ -145,6 +163,7 @@ const Profile = () => {
         {/* RIGHT COLUMN: RECORDS & SETTINGS */}
         <div className="profile-data-column">
           
+          {/* 1. CAREER RECORDS */}
           <div className="data-card impact-card-bg">
             <h3 className="card-title"><Award size={20}/> CAREER RECORDS</h3>
             <div className="records-grid">
@@ -171,6 +190,30 @@ const Profile = () => {
             </div>
           </div>
 
+          {/* 2. THE VAULT (NEW INVENTORY SECTION) */}
+          <div className="data-card vault-card-bg">
+            <h3 className="card-title"><Archive size={20}/> SECURE VAULT</h3>
+            <p className="vault-subtitle">Your claimed rewards and official credentials.</p>
+            
+            <div className="vault-grid">
+              {unlockedItems.map((item) => (
+                <div key={item.id} className="vault-item" style={{ '--item-color': item.color }}>
+                  <div className="vault-item-icon" style={{ backgroundColor: item.color }}>
+                    {item.icon}
+                  </div>
+                  <div className="vault-item-details">
+                    <h4>{item.title}</h4>
+                    <span>CLAIMED: {item.date}</span>
+                  </div>
+                  <button className="vault-action-btn" style={{ backgroundColor: item.type === 'certificate' ? '#000' : '#fff', color: item.type === 'certificate' ? '#fff' : '#000' }}>
+                    {item.type === 'certificate' ? <ExternalLink size={18}/> : <QrCode size={18}/>}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 3. ACCOUNT SECURITY */}
           <div className="data-card shadow-card">
             <h3 className="card-title"><Shield size={20}/> ACCOUNT SECURITY</h3>
             <div className="info-list">
